@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace ContactMicroservice.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class PersonController : Controller
     {
         private IPersonRepository _personRepository;

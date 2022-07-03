@@ -27,6 +27,8 @@ namespace ContactMicroservice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwaggerGen();
+
             services.AddTransient<IContactRepository, ContactRepository>();
             services.AddTransient<IPersonRepository, PersonRepository>();
             services.AddDbContext<ContactDbContext>(); 
@@ -43,6 +45,11 @@ namespace ContactMicroservice
             }
 
             app.UseRouting();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("v1/swagger.json", "Octopus.Demand"); 
+            });
 
             app.UseAuthorization();
 
