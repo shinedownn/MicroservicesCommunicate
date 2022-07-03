@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ReportMicroservice</name>
+    </assembly>
+    <members>
+        <member name="M:ReportMicroservice.DataAccess.Concrete.EfEntityRepositoryBase`2.InTransaction``1(System.Func{``0},System.Action,System.Action{System.Exception})">
+            <summary>
+            Transactional operations is prohibited when working with InMemoryDb!
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="action"></param>
+            <param name="successAction"></param>
+            <param name="exceptionAction"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

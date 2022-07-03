@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ContactMicroservice.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]/[action]")]
     [ApiController]
     public class ContactController : Controller
     {

@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "contactmicroservice": "StartDebugging",
+        "pgadmin": "StartWithoutDebugging",
+        "postgresql_database": "StartWithoutDebugging",
+        "rabbitmq": "StartWithoutDebugging",
+        "reportmicroservice": "StartDebugging"
+      }
+    }
+  }
+}
