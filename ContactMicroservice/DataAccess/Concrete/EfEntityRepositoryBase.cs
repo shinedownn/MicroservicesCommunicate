@@ -23,7 +23,7 @@ namespace ContactMicroservice.DataAccess.Concrete
         protected TContext Context { get; }
 
         public TEntity Add(TEntity entity)
-        {
+        {  
             return Context.Add(entity).Entity;
         }
 
@@ -66,6 +66,8 @@ namespace ContactMicroservice.DataAccess.Concrete
 
         public int SaveChanges()
         {
+            
+
             return Context.SaveChanges();
         }
 

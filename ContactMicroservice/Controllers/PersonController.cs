@@ -1,6 +1,8 @@
-﻿using ContactMicroservice.DataAccess.Abstract;
-using ContactMicroservice.Models;
+﻿ using ContactMicroservice.DataAccess.Abstract;
+using ContactMicroservice.Entities.Concrete; 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
 
@@ -11,35 +13,36 @@ namespace ContactMicroservice.Controllers
     public class PersonController : Controller
     {
         private IPersonRepository _personRepository;
+
         public PersonController(IPersonRepository personRepository)
         {
             _personRepository = personRepository;
         }
         [HttpGet]
-        public async Task<IActionResult> GetPersonId(Guid id)
+        public async Task<IActionResult> GetById(Guid id)
         {
-            var contact = await _personRepository.GetAsync(x => x.Personid == id);
+            var contact = await _personRepository.GetAsync(x => x.PersonId == id);
             if (contact != null) return Ok(contact);
             return BadRequest(contact);
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllPersons()
+        public async Task<IActionResult> GetAll()
         {
             var persons = await _personRepository.GetListAsync();
             return Ok(persons);
         }
         [HttpPost]
-        public async Task<IActionResult> AddPerson(Person person)
-        {
-            _personRepository.Add(person);
+        public async Task<IActionResult> Add(Person person)
+        { 
+            _personRepository.Add(person);  
             var result = await _personRepository.SaveChangesAsync();
             if (result > 0) return Ok("success");
-            return BadRequest("failed");
+            return BadRequest("failed"); 
         }
         [HttpDelete]
-        public async Task<IActionResult> DeletePerson(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var person = await _personRepository.GetAsync(x => x.Personid == id);
+            var person = await _personRepository.GetAsync(x => x.PersonId == id);
             _personRepository.Delete(person);
             var result = await _personRepository.SaveChangesAsync();
             if (result > 0) return Ok("success");

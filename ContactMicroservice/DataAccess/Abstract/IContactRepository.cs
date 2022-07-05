@@ -1,4 +1,4 @@
-﻿using ContactMicroservice.Models;
+﻿using ContactMicroservice.Entities.Concrete;
 
 namespace ContactMicroservice.DataAccess.Abstract
 {

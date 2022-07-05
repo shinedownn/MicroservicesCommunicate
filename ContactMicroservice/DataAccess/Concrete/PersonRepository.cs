@@ -1,12 +1,11 @@
-﻿using ContactMicroservice.Contexts;
-using ContactMicroservice.DataAccess.Abstract;
-using ContactMicroservice.Models;
+﻿using ContactMicroservice.DataAccess.Abstract;
+using ContactMicroservice.Entities.Concrete; 
 
 namespace ContactMicroservice.DataAccess.Concrete
 {
-    public class PersonRepository : EfEntityRepositoryBase<Person, ContactDbContext>, IPersonRepository
+    public class PersonRepository : EfEntityRepositoryBase<Person, ContactMicroserviceContext>, IPersonRepository
     {
-        public PersonRepository(ContactDbContext context) : base(context)
+        public PersonRepository(ContactMicroserviceContext context) : base(context)
         {
         }
     }
