@@ -1,6 +1,8 @@
 version: '3.8'
 services:
   contactmicroservice:
+    networks:
+      - mycase
     platform: linux/amd64
     image: ${DOCKER_REGISTRY-}contactmicroservice
     build:
@@ -10,6 +12,8 @@ services:
       - 5000:80
 
   reportmicroservice:
+    networks:
+      - mycase
     platform: linux/amd64
     image: ${DOCKER_REGISTRY-}reportmicroservice
     build:
@@ -18,6 +22,8 @@ services:
     ports:
       - 5001:80
   postgresql_database:
+    networks:
+      - mycase
     container_name: postgres_container
     image: postgres
     environment:
@@ -30,6 +36,8 @@ services:
     restart: always 
 
   pgadmin:
+    networks:
+      - mycase
     platform: linux/amd64
     container_name: pgadmin_container
     image: dpage/pgadmin4
@@ -42,12 +50,17 @@ services:
     depends_on:
       - postgresql_database
   rabbitmq:
+    networks:
+      - mycase
     platform: linux/amd64
     image: rabbitmq:3-management
+    hostname: "rabbitmq"
     environment: 
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin1234
     ports:
       - 5672:5672
       - 15672:15672
- 
+
+networks:
+   mycase:

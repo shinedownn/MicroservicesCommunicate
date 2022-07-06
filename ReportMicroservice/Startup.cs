@@ -1,11 +1,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ReportMicroservice.BackgroundServices;
+using ReportMicroservice.Contexts;
+using ReportMicroservice.DataAccess.Abstract;
+using ReportMicroservice.DataAccess.Concrete;
+using ReportMicroservice.Utilities.MessageBrokers.RabbitMq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,12 +39,36 @@ namespace ReportMicroservice
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 
             });
+             
+            services.AddTransient<IReportRepository, ReportRepository>();
+            services.AddTransient<IMessageBrokerHelper, MqQueueHelper>();
+            services.AddTransient<IMessageConsumer, MqConsumerHelper>();
+            services.AddDbContext<ReportMicroserviceContext>(options =>
+            
+            options.UseNpgsql(Configuration.GetConnectionString("PostgreSqlConnectionString")));
+
+            var context = services.BuildServiceProvider()
+                       .GetService<ReportMicroserviceContext>();
+
+            try
+            {
+                context.Database.Migrate();
+            }
+            catch (Exception)
+            {
+
+            }
             services.AddHostedService<ReportService>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
             app.UseHttpsRedirection();
             app.UseRouting();
 

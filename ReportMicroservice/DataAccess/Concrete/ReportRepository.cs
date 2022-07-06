@@ -1,12 +1,12 @@
 ﻿using ReportMicroservice.Contexts;
 using ReportMicroservice.DataAccess.Abstract;
-using ReportMicroservice.Models;
+using ReportMicroservice.Entities.Concrete;
 
 namespace ReportMicroservice.DataAccess.Concrete
 {
-    public class ReportRepository : EfEntityRepositoryBase<Report, ReportDbContext>, IReportRepository
+    public class ReportRepository : EfEntityRepositoryBase<Report, ReportMicroserviceContext>, IReportRepository
     {
-        public ReportRepository(ReportDbContext context) : base(context)
+        public ReportRepository(ReportMicroserviceContext context) : base(context)
         {
         }
     }

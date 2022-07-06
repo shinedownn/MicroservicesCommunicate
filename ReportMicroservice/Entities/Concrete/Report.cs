@@ -1,9 +1,9 @@
 ﻿using ReportMicroservice.DataAccess;
 using System;
 
-namespace ReportMicroservice.Models
+namespace ReportMicroservice.Entities.Concrete
 {
-    public class Report: IEntity
+    public partial class Report : IEntity
     {
         public Guid ReportId { get; set; }
         public DateTime RequestDate { get; set; }

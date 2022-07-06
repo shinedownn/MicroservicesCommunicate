@@ -1,4 +1,4 @@
-﻿using ReportMicroservice.Models;
+﻿using ReportMicroservice.Entities.Concrete;
 
 namespace ReportMicroservice.DataAccess.Abstract
 {

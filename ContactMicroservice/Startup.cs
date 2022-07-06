@@ -1,5 +1,7 @@
+using ContactMicroservice.BackgroundServices;
 using ContactMicroservice.DataAccess.Abstract;
 using ContactMicroservice.DataAccess.Concrete;
+using ContactMicroservice.Utilities.MessageBrokers.RabbitMq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -34,12 +36,15 @@ namespace ContactMicroservice
             services.AddSwaggerGen(c =>
             {
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename)); 
             });
 
             services.AddTransient<IContactRepository, ContactRepository>();
-            services.AddTransient<IPersonRepository, PersonRepository>();
+            services.AddTransient<IPersonRepository, PersonRepository>(); 
+            services.AddTransient<IMessageBrokerHelper, MqQueueHelper>();
+            services.AddTransient<IMessageConsumer, MqConsumerHelper>();
+            //services.AddHostedService<ReportService>();
+
             services.AddDbContext<ContactMicroserviceContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("PostgreSqlConnectionString")));
 
@@ -64,6 +69,7 @@ namespace ContactMicroservice
 
                 context.SaveChanges();
             }
+            services.AddCors();
 
         }
 
@@ -88,6 +94,7 @@ namespace ContactMicroservice
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ContactMicroservice");
             });
+            app.UseCors();
         }
     }
 }

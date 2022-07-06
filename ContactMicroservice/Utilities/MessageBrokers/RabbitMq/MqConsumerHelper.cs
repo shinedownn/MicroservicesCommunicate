@@ -39,13 +39,13 @@ namespace ContactMicroservice.Utilities.MessageBrokers.RabbitMq
                     var body = mq.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);
 
-                    Console.WriteLine($"Message: {message}");
+                    //Console.WriteLine($"Message: {message}");
                 };
 
                 channel.BasicConsume(queue: "report",
                                      autoAck: true,
                                      consumer: consumer);
-                Console.ReadKey();
+                
 
             }
 

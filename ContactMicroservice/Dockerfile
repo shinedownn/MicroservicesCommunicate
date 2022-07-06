@@ -4,7 +4,7 @@
 #For more information, please see https://aka.ms/containercompat
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
-WORKDIR /app
+WORKDIR /app/contact
 EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
@@ -19,6 +19,6 @@ FROM build AS publish
 RUN dotnet publish "ContactMicroservice.csproj" -c Release -o /app/publish
 
 FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
+WORKDIR /app/contact
+COPY --from=publish /app/contact/publish .
 ENTRYPOINT ["dotnet", "ContactMicroservice.dll"]
