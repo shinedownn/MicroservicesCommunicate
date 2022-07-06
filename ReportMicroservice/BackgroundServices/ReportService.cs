@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using ReportMicroservice.DataAccess.Abstract;
 using ReportMicroservice.Utilities.MessageBrokers.RabbitMq;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,8 @@ namespace ReportMicroservice.BackgroundServices
         private readonly IConfiguration _configuration;
         private readonly MessageBrokerOptions _brokerOptions;
         private readonly IWebHostEnvironment _environment;
-        public ReportService(IMessageConsumer messageConsumer, IConfiguration configuration, IWebHostEnvironment environment)
+        private readonly IReportRepository _reportRepository;
+        public ReportService(IMessageConsumer messageConsumer, IConfiguration configuration, IWebHostEnvironment environment, IReportRepository reportRepository)
         {
             _configuration = configuration;
             _brokerOptions = _configuration.GetSection("MessageBrokerOptions").Get<MessageBrokerOptions>();
@@ -41,6 +43,7 @@ namespace ReportMicroservice.BackgroundServices
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
             _environment = environment;
+            _reportRepository = reportRepository;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -93,7 +96,12 @@ namespace ReportMicroservice.BackgroundServices
                 var filename = Guid.NewGuid() + ".xlsx"; 
 
                 string path = Path.Combine(_environment.ContentRootPath, "ReportFiles",filename);
-                wb.SaveAs(path); 
+                wb.SaveAs(path);
+
+                var reportDb = _reportRepository.GetAsync(x => x.Status == "Pending").Result;
+                reportDb.FilePath = path;
+                reportDb.Status = "Success";
+                _reportRepository.SaveChanges();
 
                 Debug.WriteLine(message); 
             };

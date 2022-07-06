@@ -39,13 +39,17 @@ namespace ReportMicroservice
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 
             });
-             
+
             services.AddTransient<IReportRepository, ReportRepository>();
             services.AddTransient<IMessageBrokerHelper, MqQueueHelper>();
             services.AddTransient<IMessageConsumer, MqConsumerHelper>();
             services.AddDbContext<ReportMicroserviceContext>(options =>
-            
-            options.UseNpgsql(Configuration.GetConnectionString("PostgreSqlConnectionString")));
+            {
+
+                options.UseNpgsql(Configuration.GetConnectionString("PostgreSqlConnectionString"));
+            }, ServiceLifetime.Singleton
+
+           );
 
             var context = services.BuildServiceProvider()
                        .GetService<ReportMicroserviceContext>();
@@ -58,7 +62,7 @@ namespace ReportMicroservice
             {
 
             }
-            services.AddHostedService<ReportService>(); 
+            services.AddHostedService<ReportService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
