@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactMicroservice", "ContactMicroservice\ContactMicroservice.csproj", "{D186D4B2-42AF-45DF-8A83-940730BD3252}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactMicroservice", "ContactMicroservice\ContactMicroservice.csproj", "{D186D4B2-42AF-45DF-8A83-940730BD3252}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9178C0C2-FC6D-4D6D-B25A-78B1E3469F85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportMicroservice", "ReportMicroservice\ReportMicroservice.csproj", "{F7CCB60B-EE95-424F-9AC3-F89B69C2282F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportMicroservice", "ReportMicroservice\ReportMicroservice.csproj", "{F7CCB60B-EE95-424F-9AC3-F89B69C2282F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

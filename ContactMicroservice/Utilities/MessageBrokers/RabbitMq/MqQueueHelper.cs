@@ -35,8 +35,8 @@ namespace ContactMicroservice.Utilities.MessageBrokers.RabbitMq
                         autoDelete: false,
                         arguments: null);
 
-                var message = JsonConvert.SerializeObject(messageText);
-                var body = Encoding.UTF8.GetBytes(message);
+                //var message = JsonConvert.SerializeObject(messageText);
+                var body = Encoding.UTF8.GetBytes(messageText);
 
                 channel.BasicPublish(exchange: string.Empty, routingKey: "report", basicProperties: null, body: body);
             }

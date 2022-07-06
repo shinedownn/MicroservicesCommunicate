@@ -1,4 +1,4 @@
-using ContactMicroservice.BackgroundServices;
+﻿using ContactMicroservice.BackgroundServices;
 using ContactMicroservice.DataAccess.Abstract;
 using ContactMicroservice.DataAccess.Concrete;
 using ContactMicroservice.Utilities.MessageBrokers.RabbitMq;
@@ -61,11 +61,12 @@ namespace ContactMicroservice
             }
             if (context.Persons.Count() == 0)
             {
-                var PersonId = Guid.NewGuid();
-                var ContactId = Guid.NewGuid();
+                var PersonId = Guid.NewGuid(); 
 
                 context.Persons.Add(new Entities.Concrete.Person { Name = "emre", Surname = "gazel", Company = "mycompany", PersonId = PersonId });
-                context.Contacts.Add(new Entities.Concrete.Contact { PersonId = PersonId, ContactId = ContactId, Email = "my@mail.com", Phone = "555 55 55", Location = "Antalya" });
+                context.Contacts.Add(new Entities.Concrete.Contact { PersonId = PersonId, ContactId = Guid.NewGuid(), Email = "my@mail.com", Phone = "555 55 55", Location = "Antalya" });
+                context.Contacts.Add(new Entities.Concrete.Contact { PersonId = PersonId, ContactId = Guid.NewGuid(), Email = "my@mail.com", Phone = "555 55 55", Location = "İstanbul" });
+                context.Contacts.Add(new Entities.Concrete.Contact { PersonId = PersonId, ContactId = Guid.NewGuid(), Email = "my@mail.com", Phone = "555 55 55", Location = "Ankara" });
 
                 context.SaveChanges();
             }
