@@ -7,5 +7,5 @@ Docker supported
 
 includes:
 
-RabbitMq
-PostgreSql
+# RabbitMq
+# PostgreSql
