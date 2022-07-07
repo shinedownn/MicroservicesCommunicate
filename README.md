@@ -9,3 +9,5 @@ includes:
 
 # RabbitMq
 # PostgreSql
+
+Invoke GetAll endpoint after GetReport endpoint of ReportMicroservice  
