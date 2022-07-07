@@ -18,20 +18,20 @@ namespace ContactMicroservice.Controllers
         {
             _personRepository = personRepository;
         }
-        [HttpGet]
+        [HttpGet("GetById")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var contact = await _personRepository.GetAsync(x => x.PersonId == id);
             if (contact != null) return Ok(contact);
             return BadRequest(contact);
         }
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             var persons = await _personRepository.GetListAsync();
             return Ok(persons);
         }
-        [HttpPost]
+        [HttpPost("Add")]
         public async Task<IActionResult> Add(Person person)
         { 
             _personRepository.Add(person);  
@@ -39,7 +39,7 @@ namespace ContactMicroservice.Controllers
             if (result > 0) return Ok("success");
             return BadRequest("failed"); 
         }
-        [HttpDelete]
+        [HttpDelete("Delete")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var person = await _personRepository.GetAsync(x => x.PersonId == id);
@@ -48,7 +48,7 @@ namespace ContactMicroservice.Controllers
             if (result > 0) return Ok("success");
             return BadRequest("failed");
         }
-        [HttpPut]
+        [HttpPut("Update")]
         public async Task<IActionResult> Update(Person person)
         {
             _personRepository.Update(person);
